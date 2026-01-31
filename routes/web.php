@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -8,10 +9,18 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HRController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('auth.login');
 });
+
+Route::get('/dashboard', function () {
+    if (Auth::user()->role === 'admin') {
+        return redirect()->route('admin.dashboard');
+    }
+    return redirect()->route('employee.dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 Route::group(['middleware'=>'auth'],function()
 {
@@ -59,14 +68,24 @@ Route::group(['namespace' => 'App\Http\Controllers\Auth'],function()
 Route::group(['namespace' => 'App\Http\Controllers'],function()
 {
     // -------------------------- main dashboard ----------------------//
-    Route::controller(HomeController::class)->group(function () {
-        Route::get('/home', 'index')->middleware('auth')->name('home');
-    });
+   // -------------------------- main dashboard ----------------------//
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/home', 'index')->middleware('auth')->name('home');
+});
 
+// Invoice Route (Auth middleware er bhitore rakha safe)
+Route::middleware('auth')->group(function () {
+    Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
+    Route::get('/invoices/download/{id}', [InvoiceController::class, 'downloadPDF'])->name('invoices.download');
+});
+    
     // -------------------------- pages ----------------------//
     Route::controller(AccountController::class)->group(function () {
         Route::get('page/account/{user_id}', 'profileDetail')->middleware('auth');
     });
+
+    // Payroll route (Eita Controller Group er baire thakbe)
+    Route::get('hr/payroll/list', [InvoiceController::class, 'index'])->middleware('auth')->name('hr/payroll/list');
 
     // -------------------------- hr ----------------------//
     Route::middleware('auth')->prefix('hr/')->group(function () {

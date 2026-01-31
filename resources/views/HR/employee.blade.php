@@ -31,101 +31,76 @@
                         </div>
                     </div>
                     <br>
-                    <table id="alternativePagination" class="display" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th hidden>ID</th>
-                                <th>Employee ID</th>
-                                <th hidden>Photo</th>
-                                <th hidden>Location</th>
-                                <th hidden>Join Date</th>
-                                <th hidden>Status</th>
-                                <th class="ltr:!text-left rtl:!text-right">Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Experience</th>
-                                <th>Join Date</th>
-                                <th>Last Login</th>
-                                <th>Role</th>
-                                <th>Designation</th>
-                                <th>Departement</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($employeeList as $key => $employee)
-                                @php
-                                    $fullName = $employee->name;
-                                    $parts = explode(' ', $fullName);
-                                    $initials = '';
-                                    foreach ($parts as $part) {
-                                        $initials .= strtoupper(substr($part, 0, 1));
-                                    }
-                                @endphp
-                                <tr class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                    <td>{{ ++$key }}</td>
-                                    <td hidden class="id">{{ $employee->id }}</td>
-                                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5"><a href="{{ url('page/account/'.$employee->user_id) }}" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600 user-id user_id">{{ $employee->user_id }}</a></td>
-                                    <td hidden class="photo">{{ $employee->avatar }}</td>
-                                    <td hidden class="location">{{ $employee->location }}</td>
-                                    <td hidden class="join_date">{{ $employee->join_date }}</td>
-                                    <td hidden class="statuss">{{ $employee->status }}</td>
-                                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
-                                        <div class="flex items-center gap-2">
-                                            <div class="flex items-center justify-center font-medium rounded-full size-10 shrink-0 bg-slate-200 text-slate-800 dark:text-zink-50 dark:bg-zink-600">
-                                                @if(!empty($employee->avatar))
-                                                    <img src="{{ URL::to('assets/images/user/'.$employee->avatar) }}" alt="" class="h-10 rounded-full">
-                                                @else  
-                                                <div class="flex items-center justify-center font-medium rounded-full size-10 shrink-0 bg-slate-200 text-slate-800 dark:text-zink-50 dark:bg-zink-600">
-                                                   {{ $initials }}
-                                                </div>
-                                                @endif
-                                            </div>
-                                            <div class="grow">
-                                                <h6 class="mb-1"><a href="{{ url('page/account/'.$employee->user_id) }}" class="name">{{ $employee->name }}</a></h6>
-                                                <p class="text-slate-500 dark:text-zink-200 position">{{ $employee->position }}</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="email">{{ $employee->email }}</td>
-                                    <td class="phone_number">{{ $employee->phone_number }}</td>
-                                    <td class="experience">{{ $employee->experience }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($employee->join_date)->diffForHumans(); }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($employee->last_login)->diffForHumans(); }}</td>
-                                    <td class="role_name">{{ $employee->role_name }}</td>
-                                    <td class="designation">{{ $employee->designation }}</td>
-                                    <td class="department">{{ $employee->department }}</td>
-                                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
-                                        @if($employee->status == 'Active')
-                                            <span class="px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent inline-flex items-center">
-                                                <i data-lucide="check-circle" class="size-3 mr-1.5"></i> 
-                                                {{ $employee->status }}
-                                            </span>
-                                        @elseif($employee->status == 'Inactive')
-                                            <span class="px-2.5 py-0.5 inline-flex items-center text-xs font-medium rounded border bg-slate-100 border-transparent text-slate-500 dark:bg-slate-500/20 dark:text-zink-200 dark:border-transparent status">
-                                                <i data-lucide="loader" class="size-3 mr-1.5"></i>
-                                                {{ $employee->status }}
-                                            </span>
-                                        @elseif($employee->status == 'Disable')
-                                            <span class="px-2.5 py-0.5 inline-flex items-center text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent status">
-                                                <i data-lucide="x" class="size-3 mr-1.5"></i>
-                                                {{ $employee->status }}
-                                            </span>
-                                        @endif
-                                    </td>
-                                    <td class="Action">
-                                        <div class="flex gap-3">
-                                            <a class="flex items-center justify-center transition-all duration-200 ease-linear rounded-md size-8 bg-slate-100 text-slate-500 hover:text-custom-500 hover:bg-custom-100 dark:bg-zink-600 dark:text-zink-200 dark:hover:bg-custom-500/20 dark:hover:text-custom-500" href="pages-account.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="eye" class="lucide lucide-eye inline-block size-3"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg> </a>
-                                            <a data-modal-target="editEmployeeModal" id="editEmployee" class="flex items-center justify-center transition-all duration-200 ease-linear rounded-md size-8 text-slate-500 bg-slate-100 hover:text-white hover:bg-slate-500 dark:bg-zink-600 dark:text-zink-200 dark:hover:text-white dark:hover:bg-zink-500"><i data-lucide="pencil" class="size-4"></i></a>
-                                            <a data-modal-target="deleteModal" id="deleteRecord" class="flex items-center justify-center transition-all duration-200 ease-linear rounded-md size-8 bg-slate-100 text-slate-500 hover:text-red-500 hover:bg-red-100 dark:bg-zink-600 dark:text-zink-200 dark:hover:text-red-500 dark:hover:bg-red-500/20"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" class="lucide lucide-trash-2 size-4"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line> <line x1="14" x2="14" y1="11" y2="17"></line></svg></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                   
+<table id="alternativePagination" class="display" style="width:100%">
+    <thead>
+        <tr class="text-slate-500 dark:text-zink-200">
+            <th class="px-3.5 py-2.5 font-semibold border-b">No</th>
+            <th class="px-3.5 py-2.5 font-semibold border-b">Employee ID</th>
+            <th class="px-3.5 py-2.5 font-semibold border-b text-left">Name</th>
+            <th class="px-3.5 py-2.5 font-semibold border-b">Email</th>
+            <th class="px-3.5 py-2.5 font-semibold border-b">Status</th>
+            <th class="px-3.5 py-2.5 font-semibold border-b">Quick Pay</th> <th class="px-3.5 py-2.5 font-semibold border-b">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($employeeList as $key => $employee)
+            @php
+                $fullName = $employee->name;
+                $parts = explode(' ', $fullName);
+                $initials = '';
+                foreach ($parts as $part) {
+                    $initials .= strtoupper(substr($part, 0, 1));
+                }
+            @endphp
+            <tr class="border-b border-slate-200 dark:border-zink-500">
+                <td class="px-3.5 py-2.5">{{ ++$key }}</td>
+                <td class="px-3.5 py-2.5">{{ $employee->user_id }}</td>
+                <td class="px-3.5 py-2.5">
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center justify-center font-medium rounded-full size-8 shrink-0 bg-slate-200 text-slate-800 text-xs">
+                            @if(!empty($employee->avatar))
+                                <img src="{{ URL::to('assets/images/user/'.$employee->avatar) }}" alt="" class="size-8 rounded-full">
+                            @else  
+                                {{ $initials }}
+                            @endif
+                        </div>
+                        <span class="font-medium">{{ $employee->name }}</span>
+                    </div>
+                </td>
+                <td class="px-3.5 py-2.5 text-sm">{{ $employee->email }}</td>
+                <td class="px-3.5 py-2.5">
+                    <span class="px-2 py-0.5 text-[10px] font-medium rounded border {{ $employee->status == 'Active' ? 'bg-green-100 text-green-500' : 'bg-red-100 text-red-500' }}">
+                        {{ $employee->status }}
+                    </span>
+                </td>
+                
+                <td class="px-3.5 py-2.5">
+                    <form action="{{ route('invoices.store') }}" method="POST" class="flex items-center gap-1">
+                        @csrf
+                        <input type="hidden" name="employee_id" value="{{ $employee->id }}">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-1.5 text-gray-500 text-[10px] font-bold">৳</span>
+                            <input type="number" name="amount" placeholder="Amount" 
+                                   class="w-20 pl-4 pr-1 py-1 text-xs border border-slate-200 rounded focus:ring-1 focus:ring-emerald-500 outline-none dark:bg-zink-600 dark:border-zink-500" 
+                                   required>
+                        </div>
+                        <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white px-2 py-1 rounded text-xs font-bold transition-colors">
+                            Pay
+                        </button>
+                    </form>
+                </td>
+                <td class="px-3.5 py-2.5">
+                    <div class="flex gap-2">
+                        <a href="#!" class="text-slate-500 hover:text-custom-500"><i data-lucide="eye" class="size-4"></i></a>
+                        <a href="#!" class="text-slate-500 hover:text-red-500"><i data-lucide="trash-2" class="size-4"></i></a>
+                    </div>
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
+                    
                 </div>
             </div>
         </div>

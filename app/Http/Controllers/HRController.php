@@ -129,7 +129,7 @@ class HRController extends Controller
             flash()->success('Update record successfully :)');
             return redirect()->back();
         } catch (\Exception $e) {
-            \Log::info($e);
+            Log::info($e);
             DB::rollback();
             flash()->error('Update record fail :)');
             return redirect()->back();
@@ -149,7 +149,7 @@ class HRController extends Controller
             flash()->success('Delete record successfully :)');
             return redirect()->back();
         } catch (\Exception $e) {
-            \Log::info($e);
+            Log::info($e);
             DB::rollback();
             flash()->error('Delete record fail :)');
             return redirect()->back();
@@ -186,7 +186,7 @@ class HRController extends Controller
             flash()->success('Holiday created or updated successfully :)');
             return redirect()->back();
         } catch (\Exception $e) {
-            \Log::error($e); // Log the error
+            Log::error($e); // Log the error
             flash()->error('Failed to add holiday :)');
             return redirect()->back();
         }
@@ -203,7 +203,7 @@ class HRController extends Controller
             flash()->success('Holiday deleted successfully :)');
             return redirect()->back();
         } catch (\Exception $e) {
-            \Log::error($e); // Log the error
+            Log::error($e); // Log the error
             flash()->error('Failed to delete holiday :)');
             return redirect()->back();
         }
@@ -236,7 +236,7 @@ class HRController extends Controller
             return response()->json($data);
         } catch (\Exception $e) {
             // Log the exception and return an appropriate response
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
             return response()->json(['error' => 'An error occurred.'], 500);
         }
     }
@@ -287,7 +287,7 @@ class HRController extends Controller
             flash()->success('Apply Leave successfully :)');
             return redirect()->back();
         } catch (\Exception $e) {
-            \Log::error($e); // Log the error
+            Log::error($e); // Log the error
             flash()->error('Failed Apply Leave :)');
             return redirect()->back();
         }
@@ -364,7 +364,7 @@ class HRController extends Controller
             flash()->success('Department created or updated successfully :)');
             return redirect()->back();
         } catch (\Exception $e) {
-            \Log::error($e);
+            Log::error($e);
             flash()->error('Failed to add or update department :)');
             return redirect()->back();
         }
@@ -381,7 +381,7 @@ class HRController extends Controller
             flash()->success('Record deleted successfully :)');
             return redirect()->back();
         } catch (\Exception $e) {
-            \Log::error($e); // Log the error
+            Log::error($e); // Log the error
             flash()->error('Failed to delete record :)');
             return redirect()->back();
         }
