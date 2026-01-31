@@ -12,6 +12,8 @@ use App\Models\Holiday;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\LeaveInformation;
+use Illuminate\Support\Facades\Hash as FacadesHash;
+use Illuminate\Support\Facades\Log;
 
 class HRController extends Controller
 {
@@ -20,7 +22,7 @@ class HRController extends Controller
     {
         // Retrieve all employees
         $employeeList = User::all();
-        
+
         // Get the latest user ID and generate the next employee ID
         $latestUser = User::orderBy('id', 'DESC')->first();
         $userId     = $latestUser ? (int) substr($latestUser->user_id, 4) + 1 : 1;
@@ -38,6 +40,7 @@ class HRController extends Controller
     /** save record employee */
     public function employeeSaveRecord(Request $request)
     {
+        // dd($request);
         $request->validate([
             'photo'        => 'required|image',
             'name'         => 'required|string',
@@ -53,9 +56,11 @@ class HRController extends Controller
             'designation'  => 'required|string',
         ]);
 
+
+
         try {
             // Generate the photo file name
-            $photo = $request->name . '.' . $request->photo->extension();  
+            $photo = $request->name . '.' . $request->photo->extension();
             $request->photo->move(public_path('assets/images/user'), $photo);
 
             // Create a new user instance and populate fields
@@ -73,14 +78,14 @@ class HRController extends Controller
                 'experience'   => $request->experience,
                 'designation'  => $request->designation,
                 'avatar'       => $photo,
-                'password'     => Hash::make('Hello@123'),
+                'password'     => FacadesHash::make('Hello@123'),
             ]);
             $register->save();
 
             flash()->success('Record added successfully :)');
             return redirect()->back();
         } catch (\Exception $e) {
-            \Log::error($e); // Log the error
+            Log::error($e); // Log the error
             flash()->error('Failed to add record :)');
             return redirect()->back();
         }
@@ -123,7 +128,6 @@ class HRController extends Controller
 
             flash()->success('Update record successfully :)');
             return redirect()->back();
-
         } catch (\Exception $e) {
             \Log::info($e);
             DB::rollback();
@@ -139,12 +143,12 @@ class HRController extends Controller
             $deleteRecord = User::findOrFail($request->id_delete);
             $deleteRecord->delete();
             if (!empty($request->del_photo)) {
-                unlink(public_path('assets/images/user/'.$request->del_photo));
+                unlink(public_path('assets/images/user/' . $request->del_photo));
             }
 
             flash()->success('Delete record successfully :)');
             return redirect()->back();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             \Log::info($e);
             DB::rollback();
             flash()->error('Delete record fail :)');
@@ -156,7 +160,7 @@ class HRController extends Controller
     public function holidayPage()
     {
         $holidayList = Holiday::all();
-        return view('HR.holidays',compact('holidayList'));
+        return view('HR.holidays', compact('holidayList'));
     }
 
     /** save record holiday */
@@ -167,7 +171,7 @@ class HRController extends Controller
             'holiday_name' => 'required|string',
             'holiday_date' => 'required|string',
         ]);
-    
+
         try {
             // Use updateOrCreate to handle both creation and update
             $holiday = Holiday::updateOrCreate(
@@ -178,7 +182,7 @@ class HRController extends Controller
                     'holiday_date' => $request->holiday_date,
                 ]
             );
-    
+
             flash()->success('Holiday created or updated successfully :)');
             return redirect()->back();
         } catch (\Exception $e) {
@@ -189,7 +193,7 @@ class HRController extends Controller
     }
 
     /** delete record */
-    public function holidayDeleteRecord(Request $request) 
+    public function holidayDeleteRecord(Request $request)
     {
         try {
             // Find the holiday record or fail if not found
@@ -212,15 +216,15 @@ class HRController extends Controller
 
             $numberOfDay = $request->number_of_day;
             $leaveType   = $request->leave_type;
-            
+
             $leaveDay = LeaveInformation::where('leave_type', $leaveType)->first();
-            
+
             if ($leaveDay) {
                 $days = $leaveDay->leave_days - ($numberOfDay ?? 0);
             } else {
                 $days = 0; // Handle case if leave type doesn't exist
             }
-            
+
             $data = [
                 'response_code' => 200,
                 'status'        => 'success',
@@ -228,9 +232,8 @@ class HRController extends Controller
                 'leave_type'    => $days,
                 'number_of_day' => $numberOfDay,
             ];
-            
-            return response()->json($data);
 
+            return response()->json($data);
         } catch (\Exception $e) {
             // Log the exception and return an appropriate response
             \Log::error($e->getMessage());
@@ -241,18 +244,18 @@ class HRController extends Controller
     /** leave Employee */
     public function leaveEmployee()
     {
-        $annualLeave = LeaveInformation::where('leave_type','Annual Leave')->select('leave_days')->first();
-       
+        $annualLeave = LeaveInformation::where('leave_type', 'Annual Leave')->select('leave_days')->first();
+
         $leave = Leave::where('staff_id', Session::get('user_id'))->get();
         // $leaves = Leave::where('staff_id', Session::get('user_id'))->whereIn('leave_type')->get();
-        return view('HR.LeavesManage.leave-employee',compact('leave'));
+        return view('HR.LeavesManage.leave-employee', compact('leave'));
     }
 
     /** create Leave Employee */
     public function createLeaveEmployee()
     {
         $leaveInformation = LeaveInformation::all();
-        return view('HR.LeavesManage.create-leave-employee',compact('leaveInformation'));
+        return view('HR.LeavesManage.create-leave-employee', compact('leaveInformation'));
     }
 
     /** save record leave */
@@ -266,7 +269,7 @@ class HRController extends Controller
         ]);
 
         try {
-           
+
             $save  = new Leave;
             $save->staff_id         = Session::get('user_id');
             $save->employee_name    = Session::get('name');
@@ -280,7 +283,7 @@ class HRController extends Controller
             $save->status           = 'Pending';
             $save->reason           = $request->reason;
             $save->save();
-    
+
             flash()->success('Apply Leave successfully :)');
             return redirect()->back();
         } catch (\Exception $e) {
@@ -298,7 +301,7 @@ class HRController extends Controller
         $leaveDate   = json_decode($leaveDetail->leave_date, true); // Decode JSON to array
         $leaveDay    = json_decode($leaveDetail->leave_day, true); // Decode JSON to array
 
-        return view('HR.LeavesManage.view-detail-leave',compact('leaveInformation','leaveDetail','leaveDate','leaveDay'));
+        return view('HR.LeavesManage.view-detail-leave', compact('leaveInformation', 'leaveDetail', 'leaveDate', 'leaveDay'));
     }
 
     /** leave HR */
@@ -318,7 +321,7 @@ class HRController extends Controller
     {
         $users = User::all();
         $leaveInformation = LeaveInformation::all();
-        return view('HR.LeavesManage.create-leave-hr',compact('users','leaveInformation'));
+        return view('HR.LeavesManage.create-leave-hr', compact('users', 'leaveInformation'));
     }
 
     /** attendance Main */
@@ -331,7 +334,7 @@ class HRController extends Controller
     public function department()
     {
         $departmentList = Department::all();
-        return view('HR.department',compact('departmentList'));
+        return view('HR.department', compact('departmentList'));
     }
 
     /** save record department */
@@ -344,7 +347,7 @@ class HRController extends Controller
             'email'           => 'required|email',
             'total_employee'  => 'required|integer',
         ]);
-    
+
         try {
             // Use updateOrCreate to handle both creation and update
             $department = Department::updateOrCreate(
@@ -357,7 +360,7 @@ class HRController extends Controller
                     'total_employee' => $request->total_employee,
                 ]
             );
-    
+
             flash()->success('Department created or updated successfully :)');
             return redirect()->back();
         } catch (\Exception $e) {
@@ -374,7 +377,7 @@ class HRController extends Controller
             // Find the department or fail if not found
             $department = Department::findOrFail($request->id_delete);
             $department->delete();
-            
+
             flash()->success('Record deleted successfully :)');
             return redirect()->back();
         } catch (\Exception $e) {
@@ -383,5 +386,4 @@ class HRController extends Controller
             return redirect()->back();
         }
     }
-
 }
