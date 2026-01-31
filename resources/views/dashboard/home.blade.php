@@ -17,8 +17,8 @@
             </div>
             <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5">
                 <div class="col-span-12 md:order-1 xl:col-span-8 2xl:col-span-6">
-                    <h5 class="mb-2">Welcome StarCode Kh 🎉</h5>
-                    <p class="mb-5 text-slate-500 dark:text-zink-200">The salary of<a href="#!" class="underline text-slate-800 dark:text-zink-50"> StarCode Kh</a> is pending since 05 Dec, 2024. the documentation of the tasks, workflows, and activities that make up a process managed by the HR or People Ops team. <a href="#!" class="text-red-500">Learn More</a></p>
+                    <h5 class="mb-2">Welcome to the dashboard</h5>
+                    <p class="mb-5 text-slate-500 dark:text-zink-200">The salary of is pending since 05 Dec, 2024. the documentation of the tasks, workflows, and activities that make up a process managed by the HR or People Ops team. <a href="#!" class="text-red-500">Learn More</a></p>
                 </div>
                 <div class="col-span-12 md:order-2 xl:col-span-4 2xl:col-start-9 card">
                     <div class="p-4">
@@ -164,7 +164,7 @@
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
                                             <div class="flex gap-2">
                                                 <div class="bg-green-100 rounded-full size-10 dark:bg-green-500/20 shrink-0">
-                                                    <img src="{{ URL::to('assets/images/avatar-10.png') }}" alt="" class="h-10 rounded-full">
+                                                 <!--   <img src="{{ URL::to('assets/images/avatar-10.png') }}" alt="" class="h-10 rounded-full">  -->
                                                 </div>
                                                 <div class="grow">
                                                     <h6>Kristen Redden</h6>
@@ -194,7 +194,7 @@
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
                                             <div class="flex gap-2">
                                                 <div class="rounded-full size-10 bg-sky-100 dark:bg-sky-500/20 shrink-0">
-                                                    <img src="{{ URL::to('assets/images/avatar-2.png') }}" alt="" class="h-10 rounded-full">
+                                                <!--    <img src="{{ URL::to('assets/images/avatar-2.png') }}" alt="" class="h-10 rounded-full"> -->
                                                 </div>
                                                 <div class="grow">
                                                     <h6>Howard George</h6>
@@ -224,7 +224,7 @@
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
                                             <div class="flex gap-2">
                                                 <div class="rounded-full size-10 bg-slate-100 dark:bg-zink-600 shrink-0">
-                                                    <img src="{{ URL::to('assets/images/avatar-3.png') }}" alt="" class="h-10 rounded-full">
+                                                 <!--   <img src="{{ URL::to('assets/images/avatar-3.png') }}" alt="" class="h-10 rounded-full"> -->
                                                 </div>
                                                 <div class="grow">
                                                     <h6>Laura Carlson</h6>
@@ -254,7 +254,7 @@
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
                                             <div class="flex gap-2">
                                                 <div class="bg-yellow-100 rounded-full size-10 dark:bg-yellow-500/20 shrink-0">
-                                                    <img src="{{ URL::to('assets/images/avatar-4.png') }}" alt="" class="h-10 rounded-full">
+                                                 <!--   <img src="{{ URL::to('assets/images/avatar-4.png') }}" alt="" class="h-10 rounded-full">  -->
                                                 </div>
                                                 <div class="grow">
                                                     <h6>Joseph Hawkins</h6>
@@ -284,7 +284,7 @@
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
                                             <div class="flex gap-2">
                                                 <div class="bg-yellow-100 rounded-full size-10 dark:bg-yellow-500/20 shrink-0">
-                                                    <img src="{{ URL::to('assets/images/avatar-5.png') }}" alt="" class="h-10 rounded-full">
+                                                  <!--  <img src="{{ URL::to('assets/images/avatar-5.png') }}" alt="" class="h-10 rounded-full"> -->
                                                 </div>
                                                 <div class="grow">
                                                     <h6>Jeremy  Clifford</h6>
@@ -409,7 +409,7 @@
                         </div>
                         <div class="flex gap-3 p-2 mt-3 rounded-md bg-custom-500">
                             <div class="shrink-0">
-                                <img src="{{ URL::to('assets/images/profile.png') }}" alt="" class="h-24">
+                            <!--    <img src="{{ URL::to('assets/images/profile.png') }}" alt="" class="h-24">  -->
                             </div>
                             <div>
                                 <h6 class="mb-1 text-15 text-custom-50">Need Help ?</h6>
@@ -459,7 +459,7 @@
                                 <div class="border rounded-md border-slate-200 dark:border-zink-500">
                                     <div class="flex flex-wrap items-center gap-3 p-2">
                                         <div class="rounded-full size-10 shrink-0">
-                                            <img src="{{ URL::to('assets/images/profile.png') }}" alt="" class="h-10 rounded-full">
+                                        <!--   <img src="{{ URL::to('assets/images/profile.png') }}" alt="" class="h-10 rounded-full">  -->
                                         </div>
                                         <div class="grow">
                                             <h6 class="mb-1"><a href="#!">James Krogman</a></h6>
@@ -494,7 +494,7 @@
                                 <div class="border rounded-md border-slate-200 dark:border-zink-500">
                                     <div class="flex flex-wrap items-center gap-3 p-2">
                                         <div class="rounded-full size-10 shrink-0">
-                                            <img src="{{ URL::to('assets/images/user-2.jpg') }}" alt="" class="h-10 rounded-full">
+                                         <!--   <img src="{{ URL::to('assets/images/user-2.jpg') }}" alt="" class="h-10 rounded-full">  -->
                                         </div>
                                         <div class="grow">
                                             <h6 class="mb-1"><a href="#!">StarCode Kh</a></h6>
@@ -529,7 +529,7 @@
                                 <div class="border rounded-md border-slate-200 dark:border-zink-500">
                                     <div class="flex flex-wrap items-center gap-3 p-2">
                                         <div class="rounded-full size-10 shrink-0">
-                                            <img src="{{ URL::to('assets/images/profile.png') }}" alt="" class="h-10 rounded-full">
+                                         <!--   <img src="{{ URL::to('assets/images/profile.png') }}" alt="" class="h-10 rounded-full">  -->
                                         </div>
                                         <div class="grow">
                                             <h6 class="mb-1"><a href="#!">Denise Ledford</a></h6>
@@ -564,7 +564,7 @@
                                 <div class="border rounded-md border-slate-200 dark:border-zink-500">
                                     <div class="flex flex-wrap items-center gap-3 p-2">
                                         <div class="rounded-full size-10 shrink-0">
-                                            <img src="{{ URL::to('assets/images/avatar-5.png') }}" alt="" class="h-10 rounded-full">
+                                         <!--   <img src="{{ URL::to('assets/images/avatar-5.png') }}" alt="" class="h-10 rounded-full"> -->
                                         </div>
                                         <div class="grow">
                                             <h6 class="mb-1"><a href="#!">Gladys Smith</a></h6>
@@ -607,7 +607,7 @@
                             <div class="relative card-body">
                                 <div class="flex gap-3 mb-4">
                                     <div class="bg-purple-100 rounded-full size-10 dark:bg-purple-500/20 shrink-0">
-                                        <img src="{{ URL::to('assets/images/avatar-6.png') }}" alt="" class="h-10 rounded-full">
+                                     <!--   <img src="{{ URL::to('assets/images/avatar-6.png') }}" alt="" class="h-10 rounded-full"> -->
                                     </div>
                                     <div class="grow">
                                         <h6 class="mb-1">Nakisha Short</h6>
@@ -616,7 +616,7 @@
                                 </div>
                                 <button type="button" class="px-2 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Wish Her</button>
                             </div>
-                            <img src="{{ URL::to('assets/images/birthday.png') }}" alt="" class="absolute bottom-0 right-0">
+                        <!--    <img src="{{ URL::to('assets/images/birthday.png') }}" alt="" class="absolute bottom-0 right-0">  -->
                         </div>
                         <div class="col-span-12 card">
                             <div class="!pb-0 card-body">

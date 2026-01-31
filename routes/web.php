@@ -15,11 +15,9 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+
 Route::get('/dashboard', function () {
-    if (Auth::user()->role === 'admin') {
-        return redirect()->route('admin.dashboard');
-    }
-    return redirect()->route('employee.dashboard');
+    return view('dashboard.home'); 
 })->middleware(['auth'])->name('dashboard');
 
 Route::group(['middleware'=>'auth'],function()
